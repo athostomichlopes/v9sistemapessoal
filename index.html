@@ -1,0 +1,399 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Planejamento do Sistema Pessoal do Tempo – TEvEP</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:#fff;color:#111}
+.container{max-width:1000px;margin:auto;padding:30px 20px 50px}
+h2{margin:40px 0 10px;font-size:20px;font-weight:600;border-bottom:1px solid #ddd;padding-bottom:6px}
+.desc{font-size:14px;margin-bottom:12px;color:#444}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{border:1px solid #e0e0e0;padding:6px 8px;text-align:left}
+th{background:#fafafa;font-weight:600}
+input,select,textarea{width:100%;padding:6px;font-size:13px;border:1px solid #ccc;border-radius:4px;background:#fff}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#888}
+.btn{background:#000;color:#fff;padding:8px 14px;border:none;border-radius:4px;cursor:pointer;font-size:14px;margin-top:12px}
+.btn:hover{background:#333}
+.remove{background:#fff;color:#d00;border:1px solid #d00;padding:3px 6px;border-radius:3px;cursor:pointer;font-size:11px}
+.rut-section{margin-top:40px}
+.rut-grid{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.rut-block{flex:1 1 220px;border:1px solid #ccc;border-radius:4px;padding:10px;background:#fafafa}
+.rut-block h4{margin:0 0 8px;font-size:15px;font-weight:600}
+.rut-event{background:#fff;border:1px solid #ddd;border-radius:3px;padding:4px 6px;margin-bottom:6px;font-size:12px}
+.sel-event{width:100%;margin-bottom:6px;font-size:12px}
+@media print{body{background:#fff}.btn{display:none}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- TÍTULO -->
+<h1 style="text-align:center;margin-bottom:18px">Planejamento do Sistema Pessoal do Tempo – TEvEP</h1>
+
+<!-- RUT GERAL -->
+<div class="rut-section">
+<h2>Régua Única do Tempo – RUT Geral</h2>
+<div id="rutGeralGrid" class="rut-grid"></div>
+<button class="btn" onclick="buildRutGeral()">Gerar RUT Geral</button>
+</div>
+
+<!-- SISTEMAS -->
+<!-- EU -->
+<h2>EVENTOS DO SISTEMA EU</h2>
+<p class="desc">Eventos que são realizados pelo indivíduo para cuidar de si próprio. São eventos relevantes como dormir, se alimentar, fazer higiene pessoal, estimular o desenvolvimento intelectual, ter cuidados com o corpo, com a saúde, com o lazer e com os nossos sonhos.</p>
+<table id="euTable"><thead><tr><th>Evento</th><th>Tempo</th><th>Relevância</th><th>Complexidade</th><th>Situação</th><th>Tempo TEvEP</th><th>Observação</th><th></th></tr></thead><tbody></tbody></table>
+<button class="btn" onclick="addEvent('euTable')">Adicionar Evento</button>
+
+<!-- FAMÍLIA -->
+<h2>EVENTOS DO SISTEMA FAMÍLIA</h2>
+<p class="desc">Eventos que são realizados com familiares em geral.</p>
+<table id="familiaTable"><thead><tr><th>Evento</th><th>Tempo</th><th>Relevância</th><th>Complexidade</th><th>Situação</th><th>Tempo TEvEP</th><th>Observação</th><th></th></tr></thead><tbody></tbody></table>
+<button class="btn" onclick="addEvent('familiaTable')">Adicionar Evento</button>
+
+<!-- NÓS -->
+<h2>EVENTOS DO SISTEMA NÓS</h2>
+<p class="desc">Eventos realizados por casais, namorados ou pessoas casadas. Sistema frequentado por adultos.</p>
+<table id="nosTable"><thead><tr><th>Evento</th><th>Tempo</th><th>Relevância</th><th>Complexidade</th><th>Situação</th><th>Tempo TEvEP</th><th>Observação</th><th></th></tr></thead><tbody></tbody></table>
+<button class="btn" onclick="addEvent('nosTable')">Adicionar Evento</button>
+
+<!-- ESPAÇO -->
+<h2>EVENTOS DO SISTEMA ESPAÇO</h2>
+<p class="desc">É o tempo que se dedica para cuidar do quarto, do guarda-roupa, reforma no sítio, manutenção no carro etc.</p>
+<table id="espacoTable"><thead><tr><th>Evento</th><th>Tempo</th><th>Relevância</th><th>Complexidade</th><th>Situação</th><th>Tempo TEvEP</th><th>Observação</th><th></th></tr></thead><tbody></tbody></table>
+<button class="btn" onclick="addEvent('espacoTable')">Adicionar Evento</button>
+
+<!-- AMIGOS -->
+<h2>EVENTOS DO SISTEMA AMIGOS</h2>
+<p class="desc">Eventos que são realizados com amigos. Churrasco, futebol, passeio no shopping etc.</p>
+<table id="amigosTable"><thead><tr><th>Evento</th><th>Tempo</th><th>Relevância</th><th>Complexidade</th><th>Situação</th><th>Tempo TEvEP</th><th>Observação</th><th></th></tr></thead><tbody></tbody></table>
+<button class="btn" onclick="addEvent('amigosTable')">Adicionar Evento</button>
+
+<!-- SOCIAL -->
+<h2>EVENTOS DO SISTEMA SOCIAL</h2>
+<p class="desc">Festas comemorativas, feriados, aniversários, casamentos, retirada de documentos etc.</p>
+<table id="socialTable"><thead><tr><th>Evento</th><th>Tempo</th><th>Relevância</th><th>Complexidade</th><th>Situação</th><th>Tempo TEvEP</th><th>Observação</th><th></th></tr></thead><tbody></tbody></table>
+<button class="btn" onclick="addEvent('socialTable')">Adicionar Evento</button>
+
+<!-- TRABALHO/ESTUDO -->
+<h2>EVENTOS DO SISTEMA TRABALHO/ESTUDO</h2>
+<table id="trabalhoTable"><thead><tr><th>Evento</th><th>Tempo</th><th>Relevância</th><th>Complexidade</th><th>Situação</th><th>Tempo TEvEP</th><th>Observação</th><th></th></tr></thead><tbody></tbody></table>
+<button class="btn" onclick="addEvent('trabalhoTable')">Adicionar Evento</button>
+
+<!-- RUT EXECUTAR – MÚLTIPLOS EVENTOS -->
+<div class="rut-section" id="rutExecMaster">
+<h2>RUT – Régua Única do Tempo – Escolher Evento</h2>
+<div id="rutExecContainers"></div>
+<button class="btn" onclick="addRutExecContainer()">Adicionar evento para RUT</button>
+</div>
+
+<!-- Botões finais -->
+<div style="text-align:center;margin-top:40px">
+<button class="btn" onclick="exportPDF()">Exportar PDF</button>
+<button class="btn" onclick="exportExcel()">Exportar Excel</button>
+<button class="btn" onclick="exportJSON()">Exportar JSON</button>
+<button class="btn" onclick="exportCharts()">Exportar Gráficos</button>
+<button class="btn" onclick="exportPDFAdvanced()">Exportar PDF Avançado</button>
+<button class="btn" onclick="window.print()">Imprimir</button>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ---------- helpers ----------
+function addDays(date,d){const r=new Date(date);r.setDate(r.getDate()+d);return r}
+function fmtBr(d){return d.toLocaleDateString('pt-BR')}
+function parseBr(dt){
+    const [d,m,a]=dt.split('/');
+    if(!d||!m||!a||dt.length!==10){alert('Data inválida! Use DD/MM/AAAA');return null;}
+    return new Date(`${a}-${m}-${d}T00:00:00`);
+}
+function $(s){return document.querySelector(s)}
+function $$(s){return document.querySelectorAll(s)}
+function RAF(f){requestAnimationFrame(f)}
+
+// ---------- tabelas ----------
+function addEvent(tableId){
+    RAF(()=>{
+        const tb=document.querySelector(`#${tableId} tbody`);
+        const r=tb.insertRow();
+        r.innerHTML=`
+        <td><input placeholder="Informe o evento..."></td>
+        <td><input placeholder="Ex: 8h"></td>
+        <td><select><option>Alta</option><option>Média</option><option>Baixa</option></select></td>
+        <td><select><option>Baixa</option><option>Média</option><option>Alta</option></select></td>
+        <td><select><option>Verde</option><option>Amarelo</option><option>Vermelho</option></select></td>
+        <td><select><option>T1</option><option>T2</option><option>T3</option><option>T4</option><option>T5</option><option>T6</option><option>T7</option></select></td>
+        <td><input placeholder="Observação"></td>
+        <td><button class="remove" onclick="this.closest('tr').remove();refreshAll();">Remover</button></td>`;
+        refreshAll();
+    });
+}
+
+// ---------- RUT GERAL ----------
+let usedSistemas={};
+function buildRutGeral(){
+    RAF(()=>{
+        const grid=$('#rutGeralGrid');
+        grid.innerHTML='';
+        usedSistemas={};
+        const startStr=prompt('Data de início da RUT (DD/MM/AAAA)',fmtBr(new Date()));
+        const start=parseBr(startStr);
+        if(!start)return;
+        for(let i=1;i<=7;i++){
+            const ini=addDays(start,(i-1)*61);
+            const fim=addDays(start,i*61-1);
+            const div=document.createElement('div');
+            div.className='rut-block';
+            div.innerHTML=`<h4>T${i}</h4>
+            <div style="font-size:12px;margin-bottom:6px">${fmtBr(ini)} → ${fmtBr(fim)}</div>
+            <select class="sel-sistema-rut" data-idx="${i}" onchange="lockSistema(this)">${buildSistemaOptions(i)}</select>
+            <input placeholder="Espaço" style="margin-top:6px;">
+            <input placeholder="Pessoas" style="margin-top:6px;">
+            <textarea placeholder="Observações T${i}" style="margin-top:6px;font-size:12px;"></textarea>`;
+            grid.appendChild(div);
+        }
+    });
+}
+function buildSistemaOptions(idx){
+    const sistemas=['Eu','Família','Nós','Espaço','Amigos','Social','Trabalho/Estudo'];
+    let opts='<option value="">-- Sistema --</option>';
+    sistemas.forEach(s=>{
+        const selected=usedSistemas[idx]===s;
+        const disabled=Object.values(usedSistemas).includes(s) && !selected;
+        opts+=`<option value="${s}" ${selected?'selected':''} ${disabled?'disabled':''}>${s}</option>`;
+    });
+    return opts;
+}
+function lockSistema(sel){
+    RAF(()=>{
+        const idx=sel.dataset.idx;
+        const old=usedSistemas[idx];
+        if(old && old!==sel.value){
+            delete usedSistemas[idx];
+            $$('.sel-sistema-rut').forEach(s=>s.innerHTML=buildSistemaOptions(s.dataset.idx));
+        }
+        if(sel.value){
+            usedSistemas[idx]=sel.value;
+            $$('.sel-sistema-rut').forEach(s=>s.innerHTML=buildSistemaOptions(s.dataset.idx));
+        }
+    });
+}
+
+// ---------- RUT EXEC – MÚLTIPLOS EVENTOS ----------
+let rutExecCount=0;
+function addRutExecContainer(){
+    RAF(()=>{
+        const master=$('#rutExecContainers');
+        const container=document.createElement('div');
+        container.className='rut-exec-container';
+        container.id=`rutExec${rutExecCount}`;
+        container.innerHTML=`
+        <label>Selecione um evento para distribuir nos 7 Tempos:</label>
+        <select class="sel-event-rut-exec" onchange="buildSingleRutExec(${rutExecCount})"><option value="">-- selecione --</option></select>
+        <div class="rut-grid" id="rutExecGrid${rutExecCount}"></div>
+        <hr>`;
+        master.appendChild(container);
+        refreshRutExecOptions(container.querySelector('select'));
+        rutExecCount++;
+    });
+}
+function refreshRutExecOptions(sel){
+    const allEvents=new Set();
+    ['euTable','familiaTable','nosTable','espacoTable','amigosTable','socialTable','trabalhoTable'].forEach(id=>{
+        $$(`#${id} tbody tr`).forEach(tr=>{
+            const ev=tr.querySelector('input').value;
+            if(ev) allEvents.add(ev);
+        });
+    });
+    sel.innerHTML='<option value="">-- selecione --</option>';
+    allEvents.forEach(e=>{const o=document.createElement('option');o.textContent=e;sel.appendChild(o)});
+}
+function buildSingleRutExec(id){
+    RAF(()=>{
+        const sel=$(`#rutExec${id} .sel-event-rut-exec`);
+        const evento=sel.value;
+        if(!evento)return;
+        const grid=$(`#rutExecGrid${id}`);
+        grid.innerHTML='';
+        for(let i=1;i<=7;i++){
+            const div=document.createElement('div');
+            div.className='rut-block';
+            div.innerHTML=`<h4>T${i}</h4>
+            <input placeholder="Nome do evento em T${i}" value="${evento}" style="margin-bottom:6px;">
+            <input type="text" placeholder="Data Início (DD/MM/AAAA)" style="margin-bottom:6px;" onblur="this.value=fmtBr(parseBr(this.value)||new Date())">
+            <input type="text" placeholder="Data Fim (DD/MM/AAAA)" style="margin-bottom:6px;" onblur="this.value=fmtBr(parseBr(this.value)||new Date())">
+            <input placeholder="Espaço" style="margin-bottom:6px;">
+            <input placeholder="Pessoas" style="margin-bottom:6px;">
+            <textarea placeholder="Observações T${i}" style="font-size:12px;"></textarea>`;
+            grid.appendChild(div);
+        }
+    });
+}
+function refreshAll(){
+    $$('.rut-exec-container').forEach(c=>refreshRutExecOptions(c.querySelector('select')));
+}
+
+// ---------- export ----------
+function gatherData(){
+    const data={};
+    const tables=['euTable','familiaTable','nosTable','espacoTable','amigosTable','socialTable','trabalhoTable'];
+    tables.forEach(id=>{
+        const rows=[];
+        $$(`#${id} tbody tr`).forEach(tr=>{
+            const c=tr.querySelectorAll('input,select');
+            rows.push({evento:c[0].value,tempo:c[1].value,relevancia:c[2].value,complexidade:c[3].value,situacao:c[4].value,tempoTEvEP:c[5].value,observacao:c[6].value});
+        });
+        data[id.replace('Table','')]=rows;
+    });
+    // RUT Geral
+    const rutGeral={};
+    $$('#rutGeralGrid .rut-block').forEach((block,i)=>{
+        const t=i+1;
+        const sis=block.querySelector('select.sel-sistema-rut').value;
+        const esp=block.querySelector('input[placeholder="Espaço"]').value;
+        const pes=block.querySelector('input[placeholder="Pessoas"]').value;
+        const obs=block.querySelector('textarea').value;
+        const iniFim=block.querySelector('div').textContent.split(' → ');
+        rutGeral[`T${t}`]={inicio:iniFim[0],fim:iniFim[1],sistema:sis,espaco:esp,pessoas:pes,obs};
+    });
+    data.rutGeral=rutGeral;
+    // RUT Exec múltiplos
+    const rutExecAll=[];
+    $$('.rut-exec-container').forEach((container,idx)=>{
+        const eventSel=container.querySelector('select').value;
+        if(!eventSel)return;
+        const blocks=[];
+        container.querySelectorAll('.rut-block').forEach((block,i)=>{
+            const nome=block.querySelector('input[placeholder^="Nome"]').value;
+            const ini=block.querySelector('input[placeholder*="Início"]').value;
+            const fim=block.querySelector('input[placeholder*="Fim"]').value;
+            const esp=block.querySelector('input[placeholder="Espaço"]').value;
+            const pes=block.querySelector('input[placeholder="Pessoas"]').value;
+            const obs=block.querySelector('textarea').value;
+            blocks.push({tempo:`T${i+1}`,nome,inicio:ini,fim:fim,espaco:esp,pessoas:pes,obs});
+        });
+        rutExecAll.push({evento:eventSel,blocos});
+    });
+    data.rutExecAll=rutExecAll;
+    return data;
+}
+function exportJSON(){
+    const blob=new Blob([JSON.stringify(gatherData(),null,2)],{type:'application/json'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='TEvEP_SistemaPessoalTempo.json';
+    a.click();
+}
+function exportExcel(){
+    const data=gatherData();
+    const ws_data=[['Sistema','Evento','Tempo','Relevância','Complexidade','Situação','TempoTEvEP','Observação']];
+    const sistemas=['eu','familia','nos','espaco','amigos','social','trabalho'];
+    sistemas.forEach(s=>{
+        data[s].forEach(e=>ws_data.push([s,e.evento,e.tempo,e.relevancia,e.complexidade,e.situacao,e.tempoTEvEP,e.observacao]));
+    });
+    ws_data.push([]);
+    ws_data.push(['RUT GERAL','Tempo','Início','Fim','Sistema','Espaço','Pessoas','Obs']);
+    Object.entries(data.rutGeral).forEach(([t,d])=>{
+        ws_data.push(['RUT Geral',t,d.inicio,d.fim,d.sistema,d.espaco,d.pessoas,d.obs]);
+    });
+    ws_data.push([]);
+    ws_data.push(['RUT EXEC','Evento','Tempo','Nome','Início','Fim','Espaço','Pessoas','Obs']);
+    data.rutExecAll.forEach(re=>{
+        re.blocos.forEach(b=>{
+            ws_data.push(['RUT Exec',re.evento,b.tempo,b.nome,b.inicio,b.fim,b.espaco,b.pessoas,b.obs]);
+        });
+    });
+    const ws=XLSX.utils.aoa_to_sheet(ws_data);
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'TEvEP');
+    XLSX.writeFile(wb,'TEvEP_SistemaPessoalTempo.xlsx');
+}
+function exportPDF(){
+    window.print();
+}
+function exportCharts(){
+    const data=gatherData();
+    const chartData={
+        sistemas:{},
+        tempos:{T1:0,T2:0,T3:0,T4:0,T5:0,T6:0,T7:0},
+        relevancia:{Alta:0,Media:0,Baixa:0},
+        complexidade:{Alta:0,Media:0,Baixa:0},
+        situacao:{Verde:0,Amarelo:0,Vermelho:0}
+    };
+    const sistemas=['eu','familia','nos','espaco','amigos','social','trabalho'];
+    const labels=['Eu','Família','Nós','Espaço','Amigos','Social','Trabalho/Estudo'];
+    sistemas.forEach((s,i)=>{chartData.sistemas[labels[i]]=data[s].length;});
+    sistemas.forEach(s=>{
+        data[s].forEach(e=>{
+            chartData.tempos[e.tempoTEvEP]++;
+            chartData.relevancia[e.relevancia]++;
+            chartData.complexidade[e.complexidade]++;
+            chartData.situacao[e.situacao]++;
+        });
+    });
+    const blob=new Blob([JSON.stringify(chartData,null,2)],{type:'application/json'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='TEvEP_ChartData.json';
+    a.click();
+    alert('JSON para gráficos exportado! Estrutura:\n- sistemas: quantidade de eventos por sistema\n- tempos: distribuição por T1-T7\n- relevancia, complexidade, situacao: contagens');
+}
+function exportPDFAdvanced(){
+    const { jsPDF } = window.jspdf;
+    const doc=new jsPDF();
+    doc.setFontSize(16);
+    doc.text('Planejamento do Sistema Pessoal do Tempo – TEvEP',14,20);
+    const data=gatherData();
+    let y=30;
+    doc.setFontSize(12);
+    // Sistemas
+    const sistemas=['eu','familia','nos','espaco','amigos','social','trabalho'];
+    const labels=['Eu','Família','Nós','Espaço','Amigos','Social','Trabalho/Estudo'];
+    sistemas.forEach((s,i)=>{
+        doc.text(labels[i],14,y);
+        y+=6;
+        data[s].forEach(e=>{
+            doc.text(` • ${e.evento} | ${e.tempo} | ${e.relevancia}/${e.complexidade} | ${e.tempoTEvEP}`,14,y);
+            y+=6;
+        });
+        y+=4;
+        if(y>270){doc.addPage();y=20;}
+    });
+    // RUT Geral
+    doc.addPage();
+    doc.text('RUT Geral',14,20);
+    y=30;
+    Object.entries(data.rutGeral).forEach(([t,d])=>{
+        doc.text(`${t}: ${d.inicio} → ${d.fim} | Sistema: ${d.sistema}`,14,y);
+        y+=8;
+        if(y>270){doc.addPage();y=20;}
+    });
+    // RUT Exec
+    doc.addPage();
+    doc.text('RUT Execução – Eventos Distribuídos',14,20);
+    y=30;
+    data.rutExecAll.forEach(re=>{
+        doc.text(`Evento: ${re.evento}`,14,y);
+        y+=6;
+        re.blocos.forEach(b=>{
+            doc.text(` • ${b.tempo}: ${b.nome} | ${b.inicio} → ${b.fim}`,14,y);
+            y+=6;
+        });
+        y+=4;
+        if(y>270){doc.addPage();y=20;}
+    });
+    doc.save('TEvEP_Relatorio.pdf');
+}
+
+// ---------- init ----------
+['euTable','familiaTable','nosTable','espacoTable','amigosTable','socialTable','trabalhoTable'].forEach(id=>addEvent(id));
+addRutExecContainer();
+refreshAll();
+</script>
+</body>
+</html>
+```
